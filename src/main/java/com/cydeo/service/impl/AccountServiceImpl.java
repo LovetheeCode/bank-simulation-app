@@ -31,7 +31,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public List<Account> listAllAccount() {
-        return null;
+    public List<Account> listAllAccount() { //returning all the available accounts types / it is related to DB I need a method
+        return accountRepository.findAll();
     }
 }
