@@ -1,12 +1,17 @@
 package com.cydeo.controller;
 
+import com.cydeo.service.AccountService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class AccountController {
+private final AccountService accountService;
+
+    public AccountController(AccountService accountService) {
+        this.accountService = accountService;
+    }
 
     /*
     write a method to return index.html ancluding account list info
@@ -14,7 +19,7 @@ public class AccountController {
      */
     @GetMapping("/index")
     public String getIndexPage(Model model){
-
+model.addAttribute("accountList", accountService.listAllAccount());
         return "account/index";
 
     }
