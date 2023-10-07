@@ -1,5 +1,6 @@
 package com.cydeo.service.impl;
 
+import com.cydeo.enums.AccountStatus;
 import com.cydeo.enums.AccountType;
 import com.cydeo.model.Account;
 import com.cydeo.repository.AccountRepository;
@@ -24,7 +25,7 @@ public class AccountServiceImpl implements AccountService {
     public Account createNewAccount(BigDecimal balance, Date createDate, AccountType accountType, Long userId) {
         //we need to create Account object
         Account account = Account.builder().id(UUID.randomUUID()).userId(userId)
-                .balance(balance).accountType(accountType).creationDate(createDate).build();
+                .balance(balance).accountType(accountType).creationDate(createDate).accountStatus(AccountStatus.ACTIVE).build();
         //save into the database(repository)
         //return the object created
         return accountRepository.save(account);
@@ -34,4 +35,22 @@ public class AccountServiceImpl implements AccountService {
     public List<Account> listAllAccount() { //returning all the available accounts types / it is related to DB I need a method
         return accountRepository.findAll();
     }
+
+    @Override
+    public void deleteAccount(UUID id) {
+        //find the account belongs to the id
+        Account account = accountRepository.findById(id);
+        //set status to deleted
+        account.setAccountStatus(AccountStatus.DELETED);
+
+    }
+
+    @Override
+    public void activateAccount(UUID id) {
+        //find the account belongs the id
+        Account account = accountRepository.findById(id);
+        //set status to active
+        account.setAccountStatus(AccountStatus.ACTIVE);
+    }
+
 }
