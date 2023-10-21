@@ -48,31 +48,27 @@ public class AccountController {
     //once user created return it back to the index page
 
     @PostMapping("/create")
-    public String createAccount(@ModelAttribute("account") Account account) {
-
+    public String createAccount(@ModelAttribute("account") Account account){
         System.out.println(account);
-        accountService.createNewAccount(account.getBalance(), new Date(), account.getAccountType(), account.getUserId());
+        accountService.createNewAccount(account.getBalance(),new Date(),account.getAccountType(),account.getUserId());
         return "redirect:/index";
     }
 
     @GetMapping("/delete/{id}")
-        public String getDeleteAccount(@PathVariable("id") UUID id){
+    public String getDeleteAccount(@PathVariable("id")UUID id){
 
-            //print the id on the console
-            //
-            accountService.deleteAccount(id);
+        accountService.deleteAccount(id);
 
-            return "redirect:/index";
+        return "redirect:/index";
+    }
 
-        }
-
-        @GetMapping("/activate/{id}")
-        public String activateAccount(@PathVariable("id") UUID id){
+    @GetMapping("/activate/{id}")
+    public String activateAccount(@PathVariable("id") UUID id){
 
         accountService.activateAccount(id);
 
-            return "redirect:/index";
-        }
+        return "redirect:/index";
+    }
 
     }
 
